@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Valentine's Day</title>
+  <style>
+    body {
+      background-color: pink;
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      padding-top: 50px;
+      position: relative;
+      overflow: hidden;
+    }
+    h1 {
+      color: red;
+      font-size: 3em;
+    }
+    .button {
+      padding: 10px 20px;
+      font-size: 1.5em;
+      margin: 10px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      color: white;
+    }
+    #yes {
+      background-color: green;
+    }
+    #no {
+      background-color: red;
+      position: absolute;
+    }
+    .gif-container {
+      margin-top: 20px;
+    }
+    .gif-container img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    .hidden {
+      display: none;
+    }
+    .emoji {
+      font-size: 1.5em;
+    }
+    .heart {
+      position: absolute;
+      font-size: 20px; /* Small size for the hearts */
+      color: rgba(255, 0, 0, 0.3); /* Reduced opacity */
+      user-select: none; /* Prevent text selection */
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Hearts -->
+  <div id="hearts-container"></div>
+
+  <!-- First Page -->
+  <div id="first-page">
+    <h1>Would you like to be my Valentine? ❤️</h1>
+    <button id="yes" class="button" onclick="showGif()">Yes ❤️</button>
+    <button id="no" class="button" onmouseover="moveNoButton()" onclick="handleNoClick()">No ❤️</button>
+    <div id="no-gif" class="hidden">
+      <img src="https://media.tenor.com/1qhIUmMFw3gAAAAi/milk-and-mocha.gif" alt="Milk and Mocha GIF">
+    </div>
+  </div>
+
+  <!-- Second Page -->
+  <div id="second-page" class="hidden">
+    <h1>Happy Valentine's Day! ❤️</h1>
+    <div class="gif-container">
+      <img src="https://media1.tenor.com/m/BLT97B-93PMAAAAC/milk-and-mocha-milk-and-mocha-bear.gif" alt="Milk and Mocha Bear GIF">
+    </div>
+  </div>
+
+  <script>
+    // Generate hundreds of small ❤️ emojis in the background
+    const heartsContainer = document.getElementById('hearts-container');
+    const numHearts = 200; // Number of hearts to generate
+
+    for (let i = 0; i < numHearts; i++) {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.innerHTML = '❤️';
+      heart.style.left = `${Math.random() * 100}vw`; // Random horizontal position
+      heart.style.top = `${Math.random() * 100}vh`; // Random vertical position
+      heart.style.animationDelay = `${Math.random() * 5}s`; // Random animation delay
+      heartsContainer.appendChild(heart);
+    }
+
+    let moveCount = 0;
+    const maxMoves = 3;
+
+    function moveNoButton() {
+      if (moveCount >= maxMoves) return; // Stop moving after 3 times
+      const noButton = document.getElementById('no');
+      const x = Math.random() * (window.innerWidth - noButton.offsetWidth);
+      const y = Math.random() * (window.innerHeight - noButton.offsetHeight);
+      noButton.style.left = `${x}px`;
+      noButton.style.top = `${y}px`;
+      moveCount++;
+    }
+
+    function handleNoClick() {
+      if (moveCount >= maxMoves) {
+        // Show the "No" GIF
+        document.getElementById('no-gif').classList.remove('hidden');
+        document.getElementById('no').style.display = 'none';
+      }
+    }
+
+    function showGif() {
+      document.getElementById('first-page').classList.add('hidden');
+      document.getElementById('second-page').classList.remove('hidden');
+    }
+  </script>
+
+</body>
+</html>
